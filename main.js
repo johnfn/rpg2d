@@ -5,6 +5,7 @@ var globals = {
     tileWidth : 16,
     colors    : undefined,
     keys      : [],
+    ticks     : 0,
 };
 
 globals.colors = {
@@ -16,18 +17,34 @@ globals.colors = {
 var utils = {
     makeRect:
         function(x1, y2, x2, y2){
-            if (x1 > x2) {
-                var t = x1; x1 = x2; x2 = t;
+            var rect;
+            if (y2 != undefined) { 
+                /*
+                 * Top left, bottom right
+                 */
+                if (x1 > x2) {
+                    var t = x1; x1 = x2; x2 = t;
+                }
+                if (y2 > y1) { 
+                    var t = y2; y2 = y1; y1 = t;
+                }
+                rect = {
+                    x1 : x1,
+                    x2 : x2,
+                    y1 : y1,
+                    y2 : y2,
+                };
+            } else {
+                /* 
+                 * X position, Y position, size.
+                 */
+                rect = {
+                    x1 : x1,
+                    y1 : y1,
+                    x2 : x1+x2,
+                    y2 : y1+x2,
+                };
             }
-            if (y2 > y1) { 
-                var t = y2; y2 = y1; y1 = t;
-            }
-            var rect = {
-                x1 : x1,
-                x2 : x2,
-                y1 : y1,
-                y2 : y2,
-            };
             return rect;
         },
     pointIntersectRect:
@@ -37,12 +54,13 @@ var utils = {
 
         },
     getRectPoints:
-        function (x, y){
+        function (x, y, w){
+            w = w || globals.tileWidth;
             return [
-                     {x:x, y:y}, 
-                     {x: x, y:y+globals.tileWidth}, 
-                     {x: x+globals.tileWidth, y:y},  
-                     {x: x+globals.tileWidth, y:y+globals.tileWidth}, 
+                     {x: x  , y: y  }, 
+                     {x: x  , y: y+w}, 
+                     {x: x+w, y: y  },  
+                     {x: x+w, y: y+w}, 
                    ];
 
         },
@@ -79,13 +97,17 @@ var map = [
     ];
 
 var Player = {
-    x : 5,
-    y : 5,
+    speed : 1,
+    x     : 5,
+    y     : 5,
+    width : 15,
 };
 
 function gameLoop(){
     getKeys();
-    drawScreen();
+    if (globals.ticks++ % 4) {
+        drawScreen();
+    }
 }
 
 
@@ -93,24 +115,33 @@ function getKeys(){
     movePlayer();
 }
 
+function collideWithObject(x, y, w){
+    var points = utils.getRectPoints(x, y, w);
+
+    for (var p in points){
+        if (map[Math.floor(points[p].x/globals.tileWidth)][Math.floor(points[p].y/globals.tileWidth)] == "1"){
+            return true;
+        }
+    }
+    
+}
+
 function movePlayer(){
     var newPos = { 
         x : Player.x,
         y : Player.y,
     };
-    newPos.x += (globals.keys[68] - globals.keys[65])*4;
-    newPos.y += (globals.keys[83] - globals.keys[87])*4;
-    
-    var points = utils.getRectPoints(newPos.x, newPos.y);
-    for (var p in points){
-        if (map[Math.floor(points[p].x/globals.tileWidth)][Math.floor(points[p].y/globals.tileWidth)] == "1"){
-            
-            return; //Don't make positional changes
-        }
-    }
+    newPos.x += (globals.keys[68] - globals.keys[65])*Player.speed;
+    if (collideWithObject(newPos.x, newPos.y, Player.width))
+        newPos.x = Player.x;
+
+    newPos.y += (globals.keys[83] - globals.keys[87])*Player.speed;
+    if (collideWithObject(newPos.x, newPos.y, Player.width))
+        newPos.y = Player.y;
 
     Player.x = newPos.x;
     Player.y = newPos.y;
+
 }
 
 function renderTile(x, y, color){
@@ -143,5 +174,5 @@ function initialize(){
 $(function(){ 
     initialize();
 
-    setInterval(gameLoop, 50);
+    setInterval(gameLoop, 5);
 });
