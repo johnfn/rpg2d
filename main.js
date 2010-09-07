@@ -1,78 +1,3 @@
-var globals = {
-    context   : undefined,
-    maxSize   : 500,
-    tilesWide : 20,
-    tileWidth : 16,
-    colors    : undefined,
-    keys      : [],
-    ticks     : 0,
-};
-
-globals.colors = {
-    "0" : "CCCCCC",
-    "1" : "222222",
-    "p" : "5555ff",
-};
-
-var utils = {
-    makeRect:
-        function(x1, y2, x2, y2){
-            var rect;
-            if (y2 != undefined) { 
-                /*
-                 * Top left, bottom right
-                 */
-                if (x1 > x2) {
-                    var t = x1; x1 = x2; x2 = t;
-                }
-                if (y2 > y1) { 
-                    var t = y2; y2 = y1; y1 = t;
-                }
-                rect = {
-                    x1 : x1,
-                    x2 : x2,
-                    y1 : y1,
-                    y2 : y2,
-                };
-            } else {
-                /* 
-                 * X position, Y position, size.
-                 */
-                rect = {
-                    x1 : x1,
-                    y1 : y1,
-                    x2 : x1+x2,
-                    y2 : y1+x2,
-                };
-            }
-            return rect;
-        },
-    pointIntersectRect:
-        function(x, y, rect){
-            return (x > rect.x1 && x < rect.x2 &&
-                    y > rect.y1 && y < rect.y2 )
-
-        },
-    getRectPoints:
-        function (x, y, w){
-            w = w || globals.tileWidth;
-            return [
-                     {x: x  , y: y  }, 
-                     {x: x  , y: y+w}, 
-                     {x: x+w, y: y  },  
-                     {x: x+w, y: y+w}, 
-                   ];
-
-        },
-    rectIntersectRect:
-        function (rect1, rect2){
-            return utils.pointIntersectRect(rect1.x1, rect1.y1, rect2) ||
-                   utils.pointIntersectRect(rect1.x1, rect1.y2, rect2) ||
-                   utils.pointIntersectRect(rect1.x2, rect1.y1, rect2) ||
-                   utils.pointIntersectRect(rect1.x2, rect1.y2, rect2) ;
-        }
-};
-
 var map = [ 
 "00000000000000000000",
 "00001111111111110000",
@@ -115,15 +40,20 @@ function getKeys(){
     movePlayer();
 }
 
-function collideWithObject(x, y, w){
+function canMoveHere(x, y, w){
+    if (x < 0 || x > (globals.tileWidth - 1) * globals.tilesWide ||
+        y < 0 || y > (globals.tileWidth - 1) * globals.tilesWide ) 
+        return false;
+
     var points = utils.getRectPoints(x, y, w);
 
     for (var p in points){
         if (map[Math.floor(points[p].x/globals.tileWidth)][Math.floor(points[p].y/globals.tileWidth)] == "1"){
-            return true;
+            return false;
         }
     }
-    
+
+    return true;
 }
 
 function movePlayer(){
@@ -132,11 +62,11 @@ function movePlayer(){
         y : Player.y,
     };
     newPos.x += (globals.keys[68] - globals.keys[65])*Player.speed;
-    if (collideWithObject(newPos.x, newPos.y, Player.width))
+    if (!canMoveHere(newPos.x, newPos.y, Player.width))
         newPos.x = Player.x;
 
     newPos.y += (globals.keys[83] - globals.keys[87])*Player.speed;
-    if (collideWithObject(newPos.x, newPos.y, Player.width))
+    if (!canMoveHere(newPos.x, newPos.y, Player.width))
         newPos.y = Player.y;
 
     Player.x = newPos.x;
