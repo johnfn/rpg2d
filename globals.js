@@ -8,39 +8,11 @@ var globals = {
     ticks     : 0,
     mouseX    : 0,
     mouseY    : 0,
+    mapWidth  : 0,
     mousedown : false,
 };
 
-$(document).mousedown(
-    function(e){
-        globals.mousedown = true;
-    }
-);
-$(document).mouseup(
-    function(e){
-        globals.mousedown = false;
-    }
-);
-
-$(document).mousemove(
-    function(e){
-        globals.mouseX = e.pageX-9;
-        globals.mouseY = e.pageY-9;
-    }
-);
-
-$(document).keydown(
-    function(e){ 
-        console.log(e.which); 
-        globals.keys[e.which] =  true;
-    }
-);
-
-$(document).keyup(
-    function(e){ 
-        globals.keys[e.which] = false;
-    }
-);
+globals.mapWidth = (globals.tilesWide - 1) * globals.tileWidth;
 
 for (var i=0;i<255;i++) globals.keys[i]=false;
 
@@ -50,6 +22,41 @@ globals.colors = {
     "p" : "5555ff",
     "H" : "000000", //Highlighted square; map editor only. At least probably.
 };
+
+
+function handlers(){ 
+    $(document).mousedown(
+        function(e){
+            globals.mousedown = true;
+        }
+    );
+    $(document).mouseup(
+        function(e){
+            globals.mousedown = false;
+        }
+    );
+
+    $(document).mousemove(
+        function(e){
+            globals.mouseX = e.pageX-9;
+            globals.mouseY = e.pageY-9;
+        }
+    );
+
+    $(document).keydown(
+        function(e){ 
+            console.log(e.which); 
+            globals.keys[e.which] =  true;
+        }
+    );
+
+    $(document).keyup(
+        function(e){ 
+            globals.keys[e.which] = false;
+        }
+    );
+}
+
 
 var utils = {
     makeRect:
@@ -119,3 +126,6 @@ var utils = {
             globals.context.globalAlpha = 1;
         }
 };
+
+
+handlers();
