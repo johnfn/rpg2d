@@ -17,3 +17,7 @@
 
     display: none;
 }
+#dialog-info {
+    color: #2222ff;
+    text-align: right;
+}

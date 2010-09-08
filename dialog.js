@@ -5,5 +5,5 @@ function hideDialog(){
 
 function renderDialog(text){
     $("#dialog").css("display", "block");
-    $("#dialog").html(text);
+    $("#dialog-text").html(text);
 }
