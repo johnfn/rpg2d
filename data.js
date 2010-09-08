@@ -59,20 +59,26 @@ maps[2][1]= {
 };
 
 var actions = {
-    hasFood : function(p) { return p.hasFood; },
+    hasFood : 
+        function() { 
+            //return p.hasFood; 
+            return true;
+        },
 };
 
-var dialog = 
-    { 
-      1 : //HungryGuy
+var Dialogs = { 
+    data :  { 
+      0 : //HungryGuy
         {
-            0 : ["talk"   , "Hey, what's up?", [["default", 1]] ],
-            1 : ["ask"    , "Are you hungry?", [["yes", 2],
-                                                ["no" , 3]]     ],
-            2 : ["action" , actions.hasFood  , [[false, 3]
-                                                [true , 4]]     ],
-            3 : ["end"    , "That's too bad.", [[]]             ],
-            4 : ["end"    , "Yay! Food!"     , [[]]             ],
+            0 : ["talk"   , "Hey, what's up?",         {"default": 1}],
+            1 : ["ask"    , "Are you hungry?",         {"yes": 2,
+                                                        "no" : 3 }   ],
+            2 : ["action" , actions.hasFood  ,         {"false": 3,
+                                                        "true" : 4 }   ],
+            3 : ["end"    , "That's too bad.",         {}            ],
+            4 : ["end"    , "Yay! Food!"     ,         {}            ],
         },
-    };
+    },
+
+};
 

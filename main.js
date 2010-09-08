@@ -16,10 +16,10 @@ var modes = {
 
 var Game = {
     mode        : modes.NORMAL,
-    dialog      : "Rawr!", 
-    talkingWith : 0,
+    dialog      : Dialog(0), 
 }
 
+Game.dialog = Dialog(0);
 
 function gameLoop(){
     getcmap();
@@ -31,6 +31,19 @@ function gameLoop(){
 
     }
 
+    var dialogkeys = { 
+        32 : "",
+        89 : "y",
+        78 : "n",
+    };
+    for (var x in dialogkeys){
+        if (globals.keys[x]){
+            if (!Game.dialog.nextDialog(dialogkeys[x])){
+                Game.dialog.hideDialog();
+            }
+            globals.keys[x] = false;
+        }
+    }
 
     if (globals.ticks++ % 8) {
         drawScreen();
@@ -115,7 +128,7 @@ function drawScreen(){
 
     renderTile(Player.x, Player.y, "p");
 
-    renderDialog("This is a tester.");
+    Game.dialog.renderDialog();
 
 
     /*
