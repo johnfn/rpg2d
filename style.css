@@ -1,0 +1,19 @@
+#dialog {
+    color: white;
+    width: 280px;
+    position: absolute;
+    left: 15px;
+    top: 220px;
+    background: rgba(22,22,22,.2);
+    font: .8em 'Helvetica Neue', sans-serif;
+
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+
+    border-style:solid;
+    border-width:1px;
+
+    display: none;
+}

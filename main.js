@@ -1,79 +1,50 @@
-var maps = {};
-for (var i=0;i<10;i++) {
-    maps[i] = [];
-    for (var j=0;j<10;j++) {
-        maps[i][j] = [];
-    }
-}
-
-maps[1][1]= [ 
-    "00000000000000000000",
-    "00001111111111110000",
-    "00000000000000010000",
-    "00000000000000010000",
-    "00000000000000010000",
-    "00000000000000010000",
-    "00000000000000010000",
-    "00000000000000010000",
-    "00000000000000010000",
-    "00000000000000010000",
-    "00000000000000010000",
-    "00000000000000010000",
-    "00000000000000000000",
-    "00000000000000000000",
-    "00000000000000000000",
-    "00000000000000000000",
-    "00000000000000000000",
-    "00000000000000000000",
-    "00000000000000000000",
-    "00000000000000000000",
-        ];
-
-maps[2][1]= [ 
-    "00000000000000000000",
-    "00011000000000000000",
-    "00011000000000000000",
-    "00011000000000000000",
-    "00011000000000000000",
-    "00011000000000000000",
-    "00011000000000000000",
-    "00011000000000000000",
-    "00011000000000000000",
-    "00011000000000000000",
-    "00011000000000000000",
-    "00011000000000000000",
-    "00011000000000000000",
-    "00000000000000000000",
-    "00000000000000000000",
-    "00000000000000000000",
-    "00000000000000000000",
-    "00000000000000000000",
-    "00000000000000000000",
-    "00000000000000000000",
-        ];
-
 var cmap;
 
 var Player = {
-    speed : 1,
+    speed : 4,
     mapX  : 1,
     mapY  : 1,
     x     : 5,
     y     : 5,
-    width : 15,
+    width : 12,
 };
 
+var modes = {
+    NORMAL : 0,
+    DIALOG : 1,
+};
+
+var Game = {
+    mode        : modes.NORMAL,
+    dialog      : "Rawr!", 
+    talkingWith : 0,
+}
+
+
 function gameLoop(){
-    cmap = maps[Player.mapX][Player.mapY];
-    getKeys();
+    getcmap();
+
+
+    if (Game.mode == modes.NORMAL){
+        movePlayer();
+    } else if (Game.mode == modes.DIALOG){
+
+    }
+
+
     if (globals.ticks++ % 8) {
         drawScreen();
     }
 }
 
-
-function getKeys(){
-    movePlayer();
+function getcmap(){
+    cmap = [];
+    for (var i=0;i<globals.tilesWide;i++) {
+        cmap.push([]);
+        for (var j=0;j<globals.tilesWide;j++) { 
+            cmap[i].push(maps[Player.mapX][Player.mapY].data[j][i]);
+        }
+    }
 }
 
 function canMoveHere(x, y, w){
@@ -143,6 +114,16 @@ function drawScreen(){
     }
 
     renderTile(Player.x, Player.y, "p");
+
+    renderDialog("This is a tester.");
+
+
+    /*
+var Game = {
+    mode        : modes.NORMAL,
+    dialog      : "Rawr!", 
+    */
+
 }
 
 function initialize(){
