@@ -45,17 +45,6 @@ function Dialog(ID){
         $("#dialog-info").html(this.dialogInfo[res]);
 
         return true; 
-        /*
-        if (res == "talk") {
-            return;
-        }
-        if (res == "ask") {
-
-        }
-        if (res == "action") { 
-
-        }
-        */
     }
     this.renderDialog = function(){
         if (this.visible) { 

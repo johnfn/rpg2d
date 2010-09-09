@@ -1,4 +1,3 @@
-var cmap;
 
 var Player = {
     speed : 4,
@@ -16,7 +15,7 @@ var modes = {
 
 var Game = {
     mode        : modes.NORMAL,
-    dialog      : Dialog(0), 
+    dialog      : undefined, //Dialog(0), 
 }
 
 Game.dialog = Dialog(0);
@@ -27,23 +26,26 @@ function gameLoop(){
 
     if (Game.mode == modes.NORMAL){
         movePlayer();
+        doAction();
     } else if (Game.mode == modes.DIALOG){
-
-    }
-
-    var dialogkeys = { 
-        32 : "",
-        89 : "y",
-        78 : "n",
-    };
-    for (var x in dialogkeys){
-        if (globals.keys[x]){
-            if (!Game.dialog.nextDialog(dialogkeys[x])){
-                Game.dialog.hideDialog();
+        var dialogkeys = { 
+            32 : "",
+            89 : "y",
+            78 : "n",
+        };
+        for (var x in dialogkeys){
+            if (globals.keys[x]){
+                if (!Game.dialog.nextDialog(dialogkeys[x])){
+                    Game.dialog.hideDialog();
+                    Game.mode = modes.NORMAL;
+                }
+                globals.keys[x] = false;
             }
-            globals.keys[x] = false;
         }
+
     }
+
+
 
     if (globals.ticks++ % 8) {
         drawScreen();
@@ -57,6 +59,32 @@ function getcmap(){
         for (var j=0;j<globals.tilesWide;j++) { 
             cmap[i].push(maps[Player.mapX][Player.mapY].data[j][i]);
         }
+    }
+}
+
+function doAction(){
+    var vis = false;
+    //chars: {"2,2" : 0},
+    for (c in maps[Player.mapX][Player.mapY].chars) {
+        var chpos = c.split(",");
+        var di = (chpos[0] - Player.x) * (chpos[0] - Player.x) + 
+                 (chpos[1] - Player.y) * (chpos[1] - Player.y) ;
+
+        if (di < 600){
+            if (globals.keys[32]){ 
+                Game.mode = modes.DIALOG;
+                //start a conversation
+                Game.dialog = Dialog(maps[Player.mapX][Player.mapY].chars[c]); 
+            } else { 
+                vis = true;
+                $("#action-text").html("Space to talk");
+            }
+        }
+    }
+    if (vis) { 
+        $("#action").css("display", "block");
+    } else { 
+        $("#action").css("display", "none");
     }
 }
 
