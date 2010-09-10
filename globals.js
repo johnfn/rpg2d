@@ -1,5 +1,6 @@
 var globals = {
     context   : undefined,
+    sheet     : undefined,
     maxSize   : 500,
     tilesWide : 20,
     tileWidth : 16,

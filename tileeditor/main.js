@@ -14,7 +14,7 @@ function click(){
         map[Math.floor(globals.mouseX / globals.tileWidth)][Math.floor(globals.mouseY / globals.tileWidth)] = selTile;
     }
     var pos = 0;
-    for (var i in globals.colors){
+    for (var i in globals.sheet.tiles){
         if (utils.pointIntersectRect(globals.mouseX, globals.mouseY, utils.makeRect(pos*(globals.tileWidth+4), globals.tileWidth * (1 + globals.tilesWide), globals.tileWidth))){
             selTile = i;
         }
@@ -37,7 +37,8 @@ function drawScreen(){
 
     for (var i=0;i<globals.tilesWide;i++){
         for (var j=0;j<globals.tilesWide;j++){
-            utils.renderTile(i*globals.tileWidth, j*globals.tileWidth, map[i][j]);
+            globals.sheet.renderImage(globals.context, i*globals.tileWidth, j*globals.tileWidth, globals.sheet.tiles[map[i][j]][0], globals.sheet.tiles[map[i][j]][1]); 
+            //utils.renderTile(i*globals.tileWidth, j*globals.tileWidth, map[i][j]);
         }
     }
 
@@ -52,7 +53,7 @@ function drawScreen(){
     //Render 'toolbox'
     
     var pos = 0;
-    for (var i in globals.colors){
+    for (var i in globals.sheet.tiles){
         if (selTile == i){
             globals.context.fillStyle = "ffff11";
 
@@ -61,7 +62,12 @@ function drawScreen(){
                                      globals.tileWidth+4, 
                                      globals.tileWidth+4);
         }
-        utils.renderTile(pos*(globals.tileWidth+4), globals.tileWidth* (1 + globals.tilesWide), ""+i);
+
+        //globals.sheet.renderImage(globals.context, 5, 400, 1,1);
+        //debugger;
+        globals.sheet.renderImage(globals.context, pos*(globals.tileWidth+4), globals.tileWidth* (1 + globals.tilesWide), globals.sheet.tiles[i][0], globals.sheet.tiles[i][1]); 
+        //sheet.renderTile
+        //utils.renderTile(pos*(globals.tilewidth+4), globals.tilewidth* (1 + globals.tileswide), ""+i);
         ++pos;
     }
 }
@@ -80,10 +86,10 @@ function initialize(){
         out += "          ];";
         $("#txt").val(out);
     });
+
+    setInterval(gameLoop, 5);
 }
 
 $(function(){ 
-    initialize();
-
-    setInterval(gameLoop, 5);
+    globals.sheet = new SpriteSheet("../graphics/spritesheet.png", 16, initialize)
 });

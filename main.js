@@ -158,6 +158,7 @@ function drawScreen(){
 
     Game.dialog.renderDialog();
 
+    globals.sheet.renderImage(globals.context, 0, 0, 0, 0); 
 
     /*
 var Game = {
@@ -174,10 +175,10 @@ function initialize(){
 
     $(document).keydown(function(e){ console.log(e.which); globals.keys[e.which] =  true;});
     $(document).keyup(  function(e){ globals.keys[e.which] = false;});
+
+    setInterval(gameLoop, 15);
 }
 
 $(function(){ 
-    initialize();
-
-    setInterval(gameLoop, 15);
+    globals.sheet = new SpriteSheet("graphics/spritesheet.png", 16, initialize)
 });
