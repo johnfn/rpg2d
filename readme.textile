@@ -1,3 +1,13 @@
 h1. hi
 
 You have stumbled onto something dark and secretive. Quick! Do nothing about it.
+
+h2. components
+
+h4. tile editor
+
+featuring a fairly nice tile editor to make stuff with
+
+h4. sprite sheet manager
+
+couldn't find one in JS, so i made one myself
