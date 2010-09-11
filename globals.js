@@ -1,4 +1,3 @@
-
 var globals = {
     context   : undefined,
     sheet     : undefined,
@@ -12,6 +11,19 @@ var globals = {
     mouseY    : 0,
     mapWidth  : 0,
     mousedown : false,
+    keysOnce  : {
+                    keys : [],
+                    setKey: function(k){
+                        this.keys[k] = true;
+                    },
+                    getKey: function(k){
+                        if (this.keys[k]){
+                            this.keys[k] = false;
+                            return true;
+                        }
+                        return false;
+                    },
+                },
 };
 
 globals.mapWidth = (globals.tilesWide - 1) * globals.tileWidth;
@@ -25,15 +37,17 @@ globals.colors = {
     "H" : "000000", //Highlighted square; map editor only. At least probably.
 };
 
-var modes = {
+var Modes = {
     NORMAL : 0,
     DIALOG : 1,
 };
 
 var Game = {
-    mode        : modes.NORMAL,
-    dialog      : undefined, //Dialog(0), 
-}
+    mode        : Modes.NORMAL,
+    dialog      : undefined, 
+};
+
+
 
 function handlers(){ 
     $(document).mousedown(
@@ -58,6 +72,7 @@ function handlers(){
         function(e){ 
             console.log(e.which); 
             globals.keys[e.which] =  true;
+            globals.keysOnce.setKey(e.which);
         }
     );
 

@@ -14,22 +14,21 @@ var Player = {
 function gameLoop(){
     getcmap();
 
-    if (Game.mode == modes.NORMAL){
+    if (Game.mode == Modes.NORMAL){
         movePlayer();
         doAction();
-    } else if (Game.mode == modes.DIALOG){
+    } else if (Game.mode == Modes.DIALOG){
         var dialogkeys = { 
             32 : "",
             89 : "y",
             78 : "n",
         };
         for (var x in dialogkeys){
-            if (globals.keys[x]){
+            if (globals.keysOnce.getKey(x)){
                 if (!Game.dialog.nextDialog(dialogkeys[x])){
                     Game.dialog.hideDialog();
-                    Game.mode = modes.NORMAL;
+                    Game.mode = Modes.NORMAL;
                 }
-                globals.keys[x] = false;
             }
         }
     }
@@ -58,26 +57,18 @@ function getcmap(){
 //Try to talk to anyone nearby
 function doAction(){
     var vis = false;
-    //chars: {"2,2" : 0},
-    /*for (c in maps[Player.mapX][Player.mapY].chars) {
-        var chpos = c.split(",");
-        var di = (chpos[0] - Player.x) * (chpos[0] - Player.x) + 
-                 (chpos[1] - Player.y) * (chpos[1] - Player.y) ;
-
-        if (di < 600){
-            if (globals.keys[32]){ 
-                Game.mode = modes.DIALOG;
-                //start a conversation
-                Game.dialog = Dialog(maps[Player.mapX][Player.mapY].chars[c]); 
-            } else { 
-                vis = true;
-                $("#action-text").html("Space to talk");
+    var obj;
+    for (i in Interactable.all){
+        obj = Interactable.all[i];
+        if (obj.canInteract(Player)){
+            vis = true;
+            $("#action-text").html(obj.getText());
+            if (globals.keysOnce.getKey(32)) { 
+                Game.mode = Modes.DIALOG;
+                obj.action();
+                Game.dialog = Dialog(0); 
             }
         }
-    }*/
-
-    for (i in Interactable.all){
-        console.log(Interactable.all[i].interact(Player));
     }
     //console.log(Interactable.all);
     

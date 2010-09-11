@@ -19,13 +19,15 @@ function Interactable(){
         Interactable.all.push(this);
     }
 
-    this.interact = function(player){ 
+    this.canInteract = function(player){ 
         var di = (player.x - this.x) * (player.x - this.x) +
                  (player.y - this.y) * (player.y - this.y) ;
 
-        if (di < this.distToInteract){
-            return this.msg;
-        }
+        return (di < this.distToInteract);
+    }
+
+    this.getText = function(){
+        return "Stuffsauce";
     }
 
     this.action = function(){
