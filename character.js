@@ -4,6 +4,7 @@ function Character(x, y, ID){
     this.ID=ID;
 
     decorate(this, new Interactable(), [x, y, 600]);
+    decorate(this, new Talkable(), [ID]);
 }
 
 

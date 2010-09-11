@@ -16,19 +16,6 @@ function SpriteSheet(sheet, size, callback){
 
             var seenBefore = {};
 
-            /*
-            var d1 = this.cache[0][1].getContext('2d').getImageData(0,0,16,16).data;
-            var d2 = this.cache[0][2].getContext('2d').getImageData(0,0,16,16).data;
-
-            for (var i in d1){
-                if ( d1[i] != d2[i]) {
-                    debugger;
-                    return;
-                }
-            }
-            console.log("Yay");
-            */
-
             for (var i=0;i<this.spriteW;i++){
                 this.cache.push([]);
                 for (var j=0;j<this.spriteW;j++){
@@ -62,9 +49,6 @@ function SpriteSheet(sheet, size, callback){
         thisObj.imgLoad();
     }
     this.renderImage = function(ctx, x, y, tx, ty){
-        //s s s s, dest dest...
-        //ctx.drawImage(this.img, 0, 0, 16, 16, 0, 0, 16, 16);
-        
         ctx.drawImage(this.cache[tx][ty], x, y);
 
     }

@@ -12,7 +12,7 @@ var Player = {
 //Game.dialog = Dialog(0);
 
 function gameLoop(){
-    getcmap();
+    cmap = maps[Player.mapX][Player.mapY].data;
 
     if (Game.mode == Modes.NORMAL){
         movePlayer();
@@ -34,27 +34,14 @@ function gameLoop(){
     }
 
 
-
     if (globals.ticks++ % 8) {
         drawScreen();
     }
 }
 
-//Flips map x/y so that it renders right
-
-function getcmap(){
-    cmap = [];
-    for (var i=0;i<globals.tilesWide;i++) {
-        cmap.push([]);
-        for (var j=0;j<globals.tilesWide;j++) { 
-            cmap[i].push(maps[Player.mapX][Player.mapY].data[j][i]);
-        }
-    }
-}
-
 //Triggered on space
 //
-//Try to talk to anyone nearby
+//Interact with anything you can interact with
 function doAction(){
     var vis = false;
     var obj;
@@ -64,13 +51,10 @@ function doAction(){
             vis = true;
             $("#action-text").html(obj.getText());
             if (globals.keysOnce.getKey(32)) { 
-                Game.mode = Modes.DIALOG;
                 obj.action();
-                Game.dialog = Dialog(0); 
             }
         }
     }
-    //console.log(Interactable.all);
     
     if (vis) { 
         $("#action").css("display", "block");
@@ -144,21 +128,30 @@ function drawScreen(){
 
     for (var i=0;i<globals.tilesWide;i++){
         for (var j=0;j<globals.tilesWide;j++){
-            renderTile(i*globals.tileWidth, j*globals.tileWidth, cmap[i][j]);
+            globals.sheet.renderImage(globals.context, i*globals.tileWidth, j*globals.tileWidth, cmap[i][j][0], cmap[i][j][1]); 
+            //renderTile(i*globals.tileWidth, j*globals.tileWidth, cmap[i][j]);
         }
     }
 
     renderTile(Player.x, Player.y, "p");
+
+    for (var i in Drawable.all){
+        Drawable.all[i].render(globals.context);
+    }
 
     if (Game.dialog){ 
         Game.dialog.render();
     }
 
 
-    globals.sheet.renderImage(globals.context, 0, 0, 0, 0); 
 }
 
 function initialize(){
+    var c = new Character(5, 5, 0);
+    var i = new Item(50, 50, 0);
+
+
+
     globals.context = document.getElementById('main').getContext('2d');
 
     for (var i=0;i<255;i++) globals.keys[i]=false;
@@ -167,8 +160,6 @@ function initialize(){
     $(document).keyup(  function(e){ globals.keys[e.which] = false;});
 
     setInterval(gameLoop, 15);
-
-    var c = new Character(5, 5, 0);
 }
 
 $(function(){ 

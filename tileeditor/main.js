@@ -38,7 +38,6 @@ function drawScreen(){
     for (var i=0;i<globals.tilesWide;i++){
         for (var j=0;j<globals.tilesWide;j++){
             globals.sheet.renderImage(globals.context, i*globals.tileWidth, j*globals.tileWidth, globals.sheet.tiles[map[i][j]][0], globals.sheet.tiles[map[i][j]][1]); 
-            //utils.renderTile(i*globals.tileWidth, j*globals.tileWidth, map[i][j]);
         }
     }
 
@@ -63,10 +62,7 @@ function drawScreen(){
                                      globals.tileWidth+4);
         }
 
-        //globals.sheet.renderImage(globals.context, 5, 400, 1,1);
         globals.sheet.renderImage(globals.context, pos*(globals.tileWidth+4), globals.tileWidth* (1 + globals.tilesWide), globals.sheet.tiles[i][0], globals.sheet.tiles[i][1]); 
-        //sheet.renderTile
-        //utils.renderTile(pos*(globals.tilewidth+4), globals.tilewidth* (1 + globals.tileswide), ""+i);
         ++pos;
     }
 }
@@ -76,13 +72,13 @@ function initialize(){
     $("#btn").click(function(){
         var out = "var map = [\n";
         for (var i=0;i<map.length;i++){
-            out +="    ['";
+            out += "[";
             for (var j=0;j<map.length;j++){ 
-                out += map[i][j];
+                out += "["+  globals.sheet.tiles[map[i][j]] + "], " ; //Not IE compliant, but screw IE
             }
-            out += "']\n";
+            out += "], \n"; //Still not IE compliant
         }
-        out += "          ];";
+        out += "]";
         $("#txt").val(out);
     });
 
