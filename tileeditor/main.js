@@ -64,7 +64,6 @@ function drawScreen(){
         }
 
         //globals.sheet.renderImage(globals.context, 5, 400, 1,1);
-        //debugger;
         globals.sheet.renderImage(globals.context, pos*(globals.tileWidth+4), globals.tileWidth* (1 + globals.tilesWide), globals.sheet.tiles[i][0], globals.sheet.tiles[i][1]); 
         //sheet.renderTile
         //utils.renderTile(pos*(globals.tilewidth+4), globals.tilewidth* (1 + globals.tileswide), ""+i);

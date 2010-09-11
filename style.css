@@ -1,22 +1,27 @@
-#dialog {
+.window { 
     color: white;
-    width: 280px;
     position: absolute;
-    left: 15px;
-    top: 220px;
     background: rgba(22,22,22,.2);
-    font: .8em 'Helvetica Neue', sans-serif;
-
-    padding-top: 10px;
-    padding-left: 10px;
-    padding-right: 10px;
-    padding-bottom: 10px;
 
     border-style:solid;
     border-width:1px;
 
     display: none;
 }
+
+#dialog {
+    width: 280px;
+    left: 15px;
+    top: 220px;
+
+    font: .8em 'Helvetica Neue', sans-serif;
+
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+}
+
 #dialog-info {
     color: #2222ff;
     text-align: right;
@@ -26,17 +31,25 @@
 }
 
 #action {
-    color: white;
     text-align: right;
 
     display: block;
-    position: absolute;
     left: 200px;
     top: 20px;
-    background: rgba(22,22,22,.2);
     font: .9em 'Helvetica Neue', sans-serif;
-    border-style: solid;
-    border-width: 1px;
+
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+#inventory {
+    display: hide;
+    left: 10px;
+    top: 40px;
+    /*height: 150px;*/ 
+    width: 200px;
+    font: .9em 'Helvetica Neue', sans-serif;
 
     padding-left: 10px;
     padding-right: 10px;

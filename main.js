@@ -1,4 +1,3 @@
-
 var Player = {
     speed : 4,
     mapX  : 1,
@@ -8,21 +7,12 @@ var Player = {
     width : 12,
 };
 
-var modes = {
-    NORMAL : 0,
-    DIALOG : 1,
-};
 
-var Game = {
-    mode        : modes.NORMAL,
-    dialog      : undefined, //Dialog(0), 
-}
 
-Game.dialog = Dialog(0);
+//Game.dialog = Dialog(0);
 
 function gameLoop(){
     getcmap();
-
 
     if (Game.mode == modes.NORMAL){
         movePlayer();
@@ -42,7 +32,6 @@ function gameLoop(){
                 globals.keys[x] = false;
             }
         }
-
     }
 
 
@@ -51,6 +40,8 @@ function gameLoop(){
         drawScreen();
     }
 }
+
+//Flips map x/y so that it renders right
 
 function getcmap(){
     cmap = [];
@@ -62,10 +53,13 @@ function getcmap(){
     }
 }
 
+//Triggered on space
+//
+//Try to talk to anyone nearby
 function doAction(){
     var vis = false;
     //chars: {"2,2" : 0},
-    for (c in maps[Player.mapX][Player.mapY].chars) {
+    /*for (c in maps[Player.mapX][Player.mapY].chars) {
         var chpos = c.split(",");
         var di = (chpos[0] - Player.x) * (chpos[0] - Player.x) + 
                  (chpos[1] - Player.y) * (chpos[1] - Player.y) ;
@@ -80,7 +74,13 @@ function doAction(){
                 $("#action-text").html("Space to talk");
             }
         }
+    }*/
+
+    for (i in Interactable.all){
+        console.log(Interactable.all[i].interact(Player));
     }
+    //console.log(Interactable.all);
+    
     if (vis) { 
         $("#action").css("display", "block");
     } else { 
@@ -88,6 +88,7 @@ function doAction(){
     }
 }
 
+//returns safe if x/y is valid, impos if it's a wall, outofbounds if it's another map
 function canMoveHere(x, y, w){
     if (x < 0 || x > globals.mapWidth ||
         y < 0 || y > globals.mapWidth ) 
@@ -107,6 +108,7 @@ canMoveHere.IMPOS       = 0
 canMoveHere.SAFE        = 1;
 canMoveHere.OUTOFBOUNDS = 2;
 
+//attempts to move a player in a direction
 function movePlayer(){
     var res;
     var newPos = { 
@@ -130,6 +132,7 @@ function movePlayer(){
                 newPos.x -= globals.mapWidth;
                 Player.mapX++;
             }
+            //TODO Y
         }
 
     }
@@ -156,16 +159,12 @@ function drawScreen(){
 
     renderTile(Player.x, Player.y, "p");
 
-    Game.dialog.renderDialog();
+    if (Game.dialog){ 
+        Game.dialog.render();
+    }
+
 
     globals.sheet.renderImage(globals.context, 0, 0, 0, 0); 
-
-    /*
-var Game = {
-    mode        : modes.NORMAL,
-    dialog      : "Rawr!", 
-    */
-
 }
 
 function initialize(){
@@ -177,6 +176,8 @@ function initialize(){
     $(document).keyup(  function(e){ globals.keys[e.which] = false;});
 
     setInterval(gameLoop, 15);
+
+    var c = new Character(5, 5, 0);
 }
 
 $(function(){ 

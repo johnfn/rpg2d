@@ -1,3 +1,4 @@
+
 var globals = {
     context   : undefined,
     sheet     : undefined,
@@ -24,6 +25,15 @@ globals.colors = {
     "H" : "000000", //Highlighted square; map editor only. At least probably.
 };
 
+var modes = {
+    NORMAL : 0,
+    DIALOG : 1,
+};
+
+var Game = {
+    mode        : modes.NORMAL,
+    dialog      : undefined, //Dialog(0), 
+}
 
 function handlers(){ 
     $(document).mousedown(

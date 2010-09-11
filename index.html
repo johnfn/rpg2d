@@ -5,23 +5,56 @@
         <link rel="stylesheet" type="text/css" href="style.css" />
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"> </script>
 
-        <!-- These two should always be first. --> 
-        <script type="text/javascript" src="globals.js"> </script>
-        <script type="text/javascript" src="data.js"> </script>
+        <!-- These should always be first. --> 
+        <script type="text/javascript" src="decorate.js"> </script>
+        <script type="text/javascript" src="globals.js"> </script> <!-- global info --> 
+        <script type="text/javascript" src="data.js"> </script> <!-- data for maps, items, etc. --> 
+        <!-- Interfaces --> 
+        <script type="text/javascript" src="interactable.js"> </script>
 
+        <!-- Main classes --> 
+        <script type="text/javascript" src="character.js"> </script>
         <script type="text/javascript" src="spritesheet.js"> </script>
         <script type="text/javascript" src="dialog.js"> </script>
+        <script type="text/javascript" src="item.js"> </script>
+        <script type="text/javascript" src="inventory.js"> </script>
         <script type="text/javascript" src="main.js"> </script>
     </head>
 
     <body>
         <canvas id="main" width=800 height=800> </canvas>
-        <div id="action">
+
+        <div class="window" id="action">
             <div id="action-text">Keep walking!</div>
         </div> 
-        <div id="dialog"> 
+
+        <div class="window" id="dialog"> 
             <div id="dialog-text">Yes, it's a dialog!</div> <br />
             <div id="dialog-info">Space to continue</div>
         </div>
+
+        <div class="window" id="inventory">
+            <div id="inventory-table">
+                Inventory <br /> 
+                <table>
+                    <tr>
+                        <td id="11"> 1 </td>
+                        <td id="21"> 2 </td>
+                        <td id="31"> 3 </td>
+                        <td id="41"> 4 </td>
+                        <td id="51"> 5 </td>
+                    </tr>
+                    <tr>
+                        <td id="12"> 1 </td>
+                        <td id="22"> 2 </td>
+                        <td id="32"> 3 </td>
+                        <td id="42"> 4 </td>
+                        <td id="52"> 5 </td>
+                    </tr>
+                </table>
+            </div>
+            <div id="inventory-text"></div>
+        </div>
+
     </body>
 </html>

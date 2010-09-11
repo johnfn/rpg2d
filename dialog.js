@@ -46,7 +46,7 @@ function Dialog(ID){
 
         return true; 
     }
-    this.renderDialog = function(){
+    this.render = function(){
         if (this.visible) { 
             $("#dialog").css("display", "block");
         } else { 
