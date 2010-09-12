@@ -64,12 +64,6 @@ function Drawable(){
         Drawable.all.sort( function(a, b) { return a.z - b.z; } ); //Draw in order of z
     }
 
-    /*
-                i*globals.tileWidth, 
-                j*globals.tileWidth, 
-                cmap[i][j][0], 
-                cmap[i][j][1]
-                */
     this.render = function(ctx){
 
         globals.sheet.renderImage(

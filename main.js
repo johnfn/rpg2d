@@ -7,10 +7,6 @@ var Player = {
     width : 12,
 };
 
-
-
-//Game.dialog = Dialog(0);
-
 function gameLoop(){
     cmap = maps[Player.mapX][Player.mapY].data;
 
@@ -126,14 +122,6 @@ function renderTile(x, y, color){
 function drawScreen(){
     globals.context.clearRect(0,0,globals.maxSize,globals.maxSize);
 
-    for (var i=0;i<globals.tilesWide;i++){
-        for (var j=0;j<globals.tilesWide;j++){
-            globals.sheet.renderImage(globals.context, i*globals.tileWidth, j*globals.tileWidth, cmap[i][j][0], cmap[i][j][1]); 
-            //renderTile(i*globals.tileWidth, j*globals.tileWidth, cmap[i][j]);
-        }
-    }
-
-    renderTile(Player.x, Player.y, "p");
 
     for (var i in Drawable.all){
         Drawable.all[i].render(globals.context);
@@ -143,6 +131,7 @@ function drawScreen(){
         Game.dialog.render();
     }
 
+    renderTile(Player.x, Player.y, "p");
 
 }
 
@@ -150,6 +139,8 @@ function initialize(){
     var c = new Character(5, 5, 0);
     var i = new Item(50, 50, 0);
 
+    var map = new Map();
+    map.load(1,1);
 
 
     globals.context = document.getElementById('main').getContext('2d');
