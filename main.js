@@ -154,5 +154,10 @@ function initialize(){
 }
 
 $(function(){ 
-    globals.sheet = new SpriteSheet("graphics/spritesheet.png", 16, initialize)
+    //These should be chained for maximum nonbuggness.
+    globals.itemsheet = new SpriteSheet("graphics/itemsheet.png", 16, function(){ 
+
+        globals.sheet = new SpriteSheet("graphics/spritesheet.png", 16, initialize)
+
+    });
 });

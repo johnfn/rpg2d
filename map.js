@@ -31,4 +31,5 @@ function Map(){
 function Tile(x, y, spritex, spritey){
 
     decorate(this, new Drawable(), [x, y, 5, globals.sheet, spritex, spritey]); 
+    decorate(this, new Trackable(), []);
 }

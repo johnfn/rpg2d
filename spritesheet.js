@@ -24,8 +24,8 @@ function SpriteSheet(sheet, size, callback){
                     buff.height = 16;
                     buff.getContext('2d').drawImage(this.img, i*17, j*17, 16, 16, 0, 0, 16, 16);
 
-                    var data = "";
-                    var idata= buff.getContext('2d').getImageData(0,0,16,16).data;
+                    var data  = "";
+                    var idata = buff.getContext('2d').getImageData(0,0,16,16).data;
                     for (x in idata){
                         data += idata[x];
                     }

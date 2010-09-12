@@ -1,17 +1,18 @@
 var globals = {
-    context   : undefined,
-    sheet     : undefined,
-    maxSize   : 500,
-    tilesWide : 20,
-    tileWidth : 16,
-    colors    : undefined,
-    keys      : [],
-    ticks     : 0,
-    mouseX    : 0,
-    mouseY    : 0,
-    mapWidth  : 0,
-    mousedown : false,
-    keysOnce  : {
+    context     : undefined,
+    sheet       : undefined,
+    itemsheet   : undefined,
+    maxSize     : 500,
+    tilesWide   : 20,
+    tileWidth   : 16,
+    colors      : undefined,
+    keys        : [],
+    ticks       : 0,
+    mouseX      : 0,
+    mouseY      : 0,
+    mapWidth    : 0,
+    mousedown   : false,
+    keysOnce    : {
                     keys : [],
                     setKey: function(k){
                         this.keys[k] = true;
@@ -150,7 +151,18 @@ var utils = {
 
             globals.context.fillRect(x, y, globals.tileWidth, globals.tileWidth);
             globals.context.globalAlpha = 1;
-        }
+        },
+    removeObj:
+        function (arr, obj){
+            for (x in arr){
+                if (arr[x] == obj){
+                    arr.splice(x, 1);
+                    break;
+                }
+            }
+            return arr;
+        },
+
 };
 
 
