@@ -41,8 +41,8 @@ function gameLoop(){
 function doAction(){
     var vis = false;
     var obj;
-    for (i in Interactable.all){
-        obj = Interactable.all[i];
+    for (i in Objects.all("Interactable")){
+        obj = Objects.all("Interactable")[i];
         if (obj.canInteract(Player)){
             vis = true;
             $("#action-text").html(obj.getText());
@@ -123,8 +123,8 @@ function drawScreen(){
     globals.context.clearRect(0,0,globals.maxSize,globals.maxSize);
 
 
-    for (var i in Drawable.all){
-        Drawable.all[i].render(globals.context);
+    for (var i in Objects.all("Drawable")){
+        Objects.all("Drawable")[i].render(globals.context);
     }
 
     if (Game.dialog){ 

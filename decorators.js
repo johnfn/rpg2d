@@ -17,6 +17,9 @@ function decorate(objToDecorate, decorator, initargs){
     if (decorator["init"]) 
         objToDecorate["init"].apply(objToDecorate, initargs);
 
+    objToDecorate.decorators = objToDecorate.decorators || [];
+    objToDecorate.decorators.push(decorator.constructor.name);
+
     return objToDecorate;
 }
 
@@ -24,23 +27,23 @@ function decorate(objToDecorate, decorator, initargs){
 /*
  * Trackables
  *
- * Sometimes, it's convienant to be able to go Interactable.all()
+ * Sometimes, it's convienant to be able to get all of a certain
+ * type of object.
  *
  */
 
 /*
- * "Static" Tracker object.
+ * "Static" part of Trackable. Organizes all existing game objects.
  */
 var Objects = {
-    all       :
+    all:
     function(type){
-        debugger;
-        console.log(Objects.arrays[type]);
+        return Objects.arrays[type];
     },
 
-    arrays    : {},
+    arrays: {},
 
-    removeAll : 
+    removeAll: 
     function(){
 
     },
@@ -58,6 +61,15 @@ function Trackable(){
             Objects.arrays[ this.constructor.name ] = [];
         }
         Objects.arrays[ this.constructor.name ].push(this);
+
+        for (dec in this.decorators){
+            if (!Objects.arrays[ this.decorators[dec] ]) {
+                Objects.arrays[ this.decorators[dec] ] = [];
+            }
+
+            //TODO sort the objects in some uber wise generalized way.
+            Objects.arrays[ this.decorators[dec] ].push(this);
+        }
     };
 
     this.remove = function(f){
