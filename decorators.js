@@ -45,7 +45,7 @@ var Objects = {
 
     removeAll: 
     function(){
-
+        this.arrays = {}; //Am I cheating or something? This is too easy...
     },
 
 };

@@ -136,9 +136,6 @@ function drawScreen(){
 }
 
 function initialize(){
-    var c = new Character(5, 5, 0);
-    var i = new Item(50, 50, 0);
-
     var map = new Map();
     map.load(1,1);
 
