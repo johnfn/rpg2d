@@ -8,15 +8,53 @@
 //ex sheets var:
 //
 //
-function SpriteSheet(sheets, size, callback){
+
+var SpriteCache = {
+    cache :      {},
+    seenBefore : {},
+    ordered :    [],
+
+    //returns true on success, false on dupe
+    add : function(dat, x, y, sheet){
+
+        var imgdata = dat.getContext('2d').getImageData(0,0,globals.tileWidth,globals.tileWidth).data;
+        var stringdata  = "";
+        for (p in imgdata){
+            stringdata += imgdata[p];
+        }
+        if (!this.seenBefore[stringdata]){ 
+           this.cache[x+","+y+","+sheet] = dat; 
+           this.seenBefore[stringdata] = true;
+
+           this.ordered.push([x,y,sheet]); 
+           return true;
+        } 
+       return false;
+    },
+    get : function(x, y, sheet){
+        return this.cache[x+","+y+","+sheet]; 
+    },
+    getNth : function(n){
+        return this.ordered[n];
+    }, 
+    getOrderedList : function(){
+        return this.ordered;
+    },
+
+    renderImage : function(ctx, x, y, tx, ty, tsheet){
+        ctx.drawImage(this.get(tx, ty, tsheet), x, y);
+    },
+
+    //TODO: have an ordered list of all tiles accessible by #
+};
+
+function SpriteSheet(sheet, size, callback){
     this.img = new Image();
     this.img.src = sheet;
-    this.cache = [];
     this.tiles = [];
     this.spriteW = 20;
 
     //CLOSING TIME
-    var cache = this.cache;
     var img = this.img; 
 
     this.imgLoad = 
@@ -27,26 +65,15 @@ function SpriteSheet(sheets, size, callback){
             var seenBefore = {};
 
             for (var i=0;i<this.spriteW;i++){
-                this.cache.push([]);
                 for (var j=0;j<this.spriteW;j++){
                     var buff = document.createElement('canvas');
                     buff.width = globals.tileWidth;
                     buff.height = globals.tileWidth;
                     buff.getContext('2d').drawImage(this.img, i*globals.tileWidth, j*globals.tileWidth, globals.tileWidth, globals.tileWidth, 0, 0, globals.tileWidth, globals.tileWidth);
 
-                    var data  = "";
-                    var idata = buff.getContext('2d').getImageData(0,0,globals.tileWidth,globals.tileWidth).data;
-                    for (x in idata){
-                        data += idata[x];
-                    }
 
-                    if (!seenBefore[data]){ 
-                        this.cache[i].push(buff);
-                        seenBefore[data] = true;
-
-                        this.tiles.push( [i,j]) 
-                    } else {
-                        this.cache[i].push(undefined);
+                    if (SpriteCache.add(buff, i, j, "DN" )) { //true on new sprite
+                        this.tiles.push( [i,j, "DN" ]) ; //TODO: dehardcode
                     }
                 }
             }
@@ -58,15 +85,32 @@ function SpriteSheet(sheets, size, callback){
     this.img.onload = function(){
         thisObj.imgLoad();
     }
-    this.renderImage = function(ctx, x, y, tx, ty){
-        ctx.drawImage(this.cache[tx][ty], x, y);
-
+    this.renderImage = function(ctx, x, y, tx, ty, tsheet){
+        ctx.drawImage(SpriteCache.get(tx, ty, tsheet), x, y);
     }
 }
 
-function loadFilesToSheet(files, sheet){
+//takes an array of files.
+//
+//Made more complicated by the fact that SpriteSheet is a callback function deal thing.
+/*
+function loadFilesToSheet(files, callback){
+    var obj;
+    var tempObj;
 
+    function recur(array, pos){
+        if (pos >= array.length) callback(obj); 
 
+        tempObj = new SpriteSheet( array[pos], 16, function(){
+            //Copy data from tempObj to obj
+            
+            recur(array, pos+1);
+        }); 
+        pos++;
 
+    }
+    obj = new SpriteSheet( array[0], 16, function(){
+                                            recur(array, 1);
+    });
 
-} 
+} */

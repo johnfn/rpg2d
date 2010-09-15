@@ -5,7 +5,7 @@ var map = [];
 for (var i=0;i<globals.tilesWide;i++){
     map.push([]);
     for (var j=0;j<globals.tilesWide;j++){
-        map[i].push("0");
+        map[i].push([0,0,"DN"]);
     }
 }
 
@@ -18,9 +18,9 @@ function click(){
         map[Math.floor(globals.mouseX / globals.tileWidth)][Math.floor(globals.mouseY / globals.tileWidth)] = selTile;
     }
     var pos = 0;
-    for (var i in globals.sheet.tiles){
+    for (var i in SpriteCache.getOrderedList()){
         if (utils.pointIntersectRect(globals.mouseX, globals.mouseY, utils.makeRect(toolboxPos[i][0], toolboxPos[i][1], globals.tileWidth))){
-            selTile = i;
+            selTile = SpriteCache.getNth(i);
         }
         ++pos;
     }
@@ -41,7 +41,7 @@ function drawScreen(){
 
     for (var i=0;i<globals.tilesWide;i++){
         for (var j=0;j<globals.tilesWide;j++){
-            globals.sheet.renderImage(globals.context, i*globals.tileWidth, j*globals.tileWidth, globals.sheet.tiles[map[i][j]][0], globals.sheet.tiles[map[i][j]][1]); 
+            SpriteCache.renderImage(globals.context, i*globals.tileWidth, j*globals.tileWidth, map[i][j][0], map[i][j][1], map[i][j][2]); 
         }
     }
 
@@ -57,7 +57,7 @@ function drawScreen(){
     
     var toolWidth = 15;
     var pos = 0;
-    for (var i in globals.sheet.tiles){
+    for (var i in SpriteCache.getOrderedList()){
         if (selTile == i){
             globals.context.fillStyle = "ffff11";
 
@@ -67,11 +67,12 @@ function drawScreen(){
                                      globals.tileWidth+4);
         }
 
-        globals.sheet.renderImage(globals.context, 
-                                  (pos % toolWidth)*(globals.tileWidth+4), 
-                                  globals.tileWidth*(globals.tilesWide) + (Math.floor(i/toolWidth)) * 20, 
-                                  globals.sheet.tiles[i][0], 
-                                  globals.sheet.tiles[i][1]); 
+        SpriteCache.renderImage(globals.context, 
+                                  toolboxPos[pos][0], 
+                                  toolboxPos[pos][1], 
+                                  SpriteCache.getNth(i)[0], 
+                                  SpriteCache.getNth(i)[1], 
+                                  SpriteCache.getNth(i)[2]);
         ++pos;
     }
 }
@@ -115,12 +116,12 @@ $(function(){
 
     function loadRecursive(num){
 
-
     }
 
 /*var spriteFiles = {
     "outside_normal" : "GR",
     "dungeon"        : "DN",*/
 
-    globals.sheet = new SpriteSheet(globals.spriteFiles, 16, initialize)
+    globals.sheet = new SpriteSheet("../graphics/dungeon.png", 16, initialize); 
+
 });

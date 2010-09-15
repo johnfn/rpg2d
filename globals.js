@@ -1,4 +1,4 @@
-var spriteFiles = {
+var spriteAbbr = {
     "outside_normal" : "GR",
     "dungeon"        : "DN",
 
@@ -92,6 +92,10 @@ function handlers(){
 
 
 var utils = {
+    getSpriteDir:
+        function (nm){
+            return "../graphics/"+nm+".png";
+        }, 
     makeRect:
         function(x1, y1, x2, y2){
             var rect;
