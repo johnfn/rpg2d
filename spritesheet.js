@@ -40,6 +40,9 @@ var SpriteCache = {
     getOrderedList : function(){
         return this.ordered;
     },
+    loadSpriteFile : function(f, cb){
+        new SpriteSheet(f, 16, cb); 
+    },
 
     renderImage : function(ctx, x, y, tx, ty, tsheet){
         ctx.drawImage(this.get(tx, ty, tsheet), x, y);
@@ -50,19 +53,18 @@ var SpriteCache = {
 
 function SpriteSheet(sheet, size, callback){
     this.img = new Image();
-    this.img.src = sheet;
+    this.img.src = utils.getSpriteDir(sheet);
     this.tiles = [];
     this.spriteW = 20;
 
     //CLOSING TIME
     var img = this.img; 
+    var abbr = spriteAbbr[sheet]; 
 
     this.imgLoad = 
         function(){
             //cache some tiles (this code makes sure not to load the same tile twice)
             //
-
-            var seenBefore = {};
 
             for (var i=0;i<this.spriteW;i++){
                 for (var j=0;j<this.spriteW;j++){
@@ -72,8 +74,8 @@ function SpriteSheet(sheet, size, callback){
                     buff.getContext('2d').drawImage(this.img, i*globals.tileWidth, j*globals.tileWidth, globals.tileWidth, globals.tileWidth, 0, 0, globals.tileWidth, globals.tileWidth);
 
 
-                    if (SpriteCache.add(buff, i, j, "DN" )) { //true on new sprite
-                        this.tiles.push( [i,j, "DN" ]) ; //TODO: dehardcode
+                    if (SpriteCache.add(buff, i, j, abbr )) { //true on new sprite
+                        this.tiles.push( [i,j, abbr]) ; //TODO: dehardcode
                     }
                 }
             }

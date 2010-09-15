@@ -101,7 +101,7 @@ function initialize(){
     var pos = 0;
 
 
-    for (var i in globals.sheet.tiles){
+    for (var i in SpriteCache.getOrderedList()){
         toolboxPos.push([
                            (i % toolWidth  )*(globals.tileWidth+4), 
                            (globals.tileWidth)*(globals.tilesWide  ) + (Math.floor(i/toolWidth)) * 20, 
@@ -113,15 +113,13 @@ function initialize(){
 }
 
 $(function(){ 
-
-    function loadRecursive(num){
-
-    }
-
 /*var spriteFiles = {
     "outside_normal" : "GR",
     "dungeon"        : "DN",*/
 
-    globals.sheet = new SpriteSheet("../graphics/dungeon.png", 16, initialize); 
 
+    SpriteCache.loadSpriteFile("dungeon", function(){
+        SpriteCache.loadSpriteFile("outside_normal", initialize);    
+        
+    } );
 });
