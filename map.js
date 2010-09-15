@@ -25,7 +25,7 @@ function Map(){
         for (var i in data){
             tiles.push([]);
             for (var j in data[i]){
-                tiles.push(new Tile(i * globals.tileWidth, j * globals.tileWidth, data[i][j][0], data[i][j][1]));
+                tiles.push(new Tile(i * globals.tileWidth, j * globals.tileWidth, data[i][j][0], data[i][j][1], data[i][j][2]));
             }
         }
 
@@ -57,8 +57,8 @@ function Map(){
     }
 }
 
-function Tile(x, y, spritex, spritey){
+function Tile(x, y, spritex, spritey, sheetname){
 
-    decorate(this, new Drawable(), [x, y, 5, globals.sheet, spritex, spritey]); 
+    decorate(this, new Drawable(), [x, y, 5, sheetname, spritex, spritey]); 
     decorate(this, new Trackable(), []);
 }

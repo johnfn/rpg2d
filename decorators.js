@@ -171,7 +171,7 @@ function Drawable(){
         this.y = y;
         this.z = z; //For ordering top to bottom.
 
-        this.spritesheet = spritesheet;
+        this.sheet = spritesheet;
         this.spritex = spritex;
         this.spritey = spritey;
 
@@ -182,12 +182,13 @@ function Drawable(){
 
     this.render = function(ctx){
 
-        this.spritesheet.renderImage(
+        Sprites.renderImage(
                 ctx, 
                 this.x, 
                 this.y, 
                 this.spritex,
-                this.spritey
+                this.spritey,
+                this.sheet
                 ); 
     }
 

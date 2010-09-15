@@ -154,9 +154,16 @@ function initialize(){
 
 $(function(){ 
     //These should be chained for maximum nonbuggness.
-    globals.itemsheet = new SpriteSheet("graphics/itemsheet.png", 16, function(){ 
+
+
+    Sprites.loadSpriteFile("dungeon", function(){
+        Sprites.loadSpriteFile("outside_normal", initialize);    
+        
+    });
+
+    /*globals.itemsheet = new SpriteSheet("graphics/itemsheet.png", 16, function(){ 
 
         globals.sheet = new SpriteSheet("graphics/spritesheet.png", 16, initialize)
 
-    });
+    });*/
 });

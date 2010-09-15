@@ -9,7 +9,7 @@
 //
 //
 
-var SpriteCache = {
+var Sprites = {
     cache :      {},
     seenBefore : {},
     ordered :    [],
@@ -74,7 +74,7 @@ function SpriteSheet(sheet, size, callback){
                     buff.getContext('2d').drawImage(this.img, i*globals.tileWidth, j*globals.tileWidth, globals.tileWidth, globals.tileWidth, 0, 0, globals.tileWidth, globals.tileWidth);
 
 
-                    if (SpriteCache.add(buff, i, j, abbr )) { //true on new sprite
+                    if (Sprites.add(buff, i, j, abbr )) { //true on new sprite
                         this.tiles.push( [i,j, abbr]) ; //TODO: dehardcode
                     }
                 }
@@ -88,7 +88,7 @@ function SpriteSheet(sheet, size, callback){
         thisObj.imgLoad();
     }
     this.renderImage = function(ctx, x, y, tx, ty, tsheet){
-        ctx.drawImage(SpriteCache.get(tx, ty, tsheet), x, y);
+        ctx.drawImage(Sprites.get(tx, ty, tsheet), x, y);
     }
 }
 
