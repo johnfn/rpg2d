@@ -32,6 +32,7 @@ maps[1][1]= {
     ], 
 
     exits: {},
+    items: {"5,5" : 0}, 
     chars: {"2,2" : 0},
 };
 
@@ -59,6 +60,7 @@ maps[2][1]= {
           ],
     exits: {},
     chars: {},
+    items: {},
 };
 
 var actions = {

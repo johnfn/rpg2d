@@ -34,15 +34,25 @@ function Map(){
         //exits: {},
         //
         //chars: {"2,2": 0
-        for (var pos in maps[Player.mapX][Player.mapY].chars){
-            var cpos = pos.split(",");
 
-            var c = new Character((cpos[0]-0) * globals.tileWidth, 
-                                  (cpos[1]-0) * globals.tileWidth, 
-                                   maps[Player.mapX][Player.mapY].chars[pos]);
+        var objMap = {
+            "chars" : Character,
+            "items" : Item,
+        }
+
+        for (objStr in objMap) { 
+
+            for (var pos in maps[Player.mapX][Player.mapY][objStr]){
+                var cpos = pos.split(",");
+
+                var c = new objMap[objStr]((cpos[0]-0) * globals.tileWidth, 
+                                           (cpos[1]-0) * globals.tileWidth, 
+                                            maps[Player.mapX][Player.mapY][objStr][pos]);
+
+            }
 
         }
-        var i = new Item(50, 50, 0);
+        //var i = new Item(50, 50, 0);
 
     }
 }

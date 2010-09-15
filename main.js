@@ -133,6 +133,8 @@ function drawScreen(){
 
     renderTile(Player.x, Player.y, "p");
 
+    Inventory.render();
+
 }
 
 function initialize(){

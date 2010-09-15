@@ -20,12 +20,12 @@ function SpriteSheet(sheet, size, callback){
                 this.cache.push([]);
                 for (var j=0;j<this.spriteW;j++){
                     var buff = document.createElement('canvas');
-                    buff.width = 16;
-                    buff.height = 16;
-                    buff.getContext('2d').drawImage(this.img, i*17, j*17, 16, 16, 0, 0, 16, 16);
+                    buff.width = globals.tileWidth;
+                    buff.height = globals.tileWidth;
+                    buff.getContext('2d').drawImage(this.img, i*globals.tileWidth, j*globals.tileWidth, globals.tileWidth, globals.tileWidth, 0, 0, globals.tileWidth, globals.tileWidth);
 
                     var data  = "";
-                    var idata = buff.getContext('2d').getImageData(0,0,16,16).data;
+                    var idata = buff.getContext('2d').getImageData(0,0,globals.tileWidth,globals.tileWidth).data;
                     for (x in idata){
                         data += idata[x];
                     }

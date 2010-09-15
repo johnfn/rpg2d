@@ -1,4 +1,6 @@
 var selTile = "1";
+
+var toolboxPos = [];
 var map = [];
 for (var i=0;i<globals.tilesWide;i++){
     map.push([]);
@@ -6,6 +8,8 @@ for (var i=0;i<globals.tilesWide;i++){
         map[i].push("0");
     }
 }
+
+
 
 function click(){
     if (globals.mouseX < globals.tileWidth * globals.tilesWide &&
@@ -15,7 +19,7 @@ function click(){
     }
     var pos = 0;
     for (var i in globals.sheet.tiles){
-        if (utils.pointIntersectRect(globals.mouseX, globals.mouseY, utils.makeRect(pos*(globals.tileWidth+4), globals.tileWidth * (1 + globals.tilesWide), globals.tileWidth))){
+        if (utils.pointIntersectRect(globals.mouseX, globals.mouseY, utils.makeRect(toolboxPos[i][0], toolboxPos[i][1], globals.tileWidth))){
             selTile = i;
         }
         ++pos;
@@ -51,18 +55,23 @@ function drawScreen(){
 
     //Render 'toolbox'
     
+    var toolWidth = 15;
     var pos = 0;
     for (var i in globals.sheet.tiles){
         if (selTile == i){
             globals.context.fillStyle = "ffff11";
 
-            globals.context.fillRect(pos*(globals.tileWidth+4)-2,
-                                     globals.tileWidth* (1+globals.tilesWide)-2, 
+            globals.context.fillRect((pos % toolWidth)*(globals.tileWidth+4)-2,
+                                     globals.tileWidth* (globals.tilesWide)-2 + (Math.floor(i/toolWidth)) * 20, 
                                      globals.tileWidth+4, 
                                      globals.tileWidth+4);
         }
 
-        globals.sheet.renderImage(globals.context, pos*(globals.tileWidth+4), globals.tileWidth* (1 + globals.tilesWide), globals.sheet.tiles[i][0], globals.sheet.tiles[i][1]); 
+        globals.sheet.renderImage(globals.context, 
+                                  (pos % toolWidth)*(globals.tileWidth+4), 
+                                  globals.tileWidth*(globals.tilesWide) + (Math.floor(i/toolWidth)) * 20, 
+                                  globals.sheet.tiles[i][0], 
+                                  globals.sheet.tiles[i][1]); 
         ++pos;
     }
 }
@@ -83,6 +92,23 @@ function initialize(){
     });
 
     setInterval(gameLoop, 5);
+
+
+    //Store toolbox positions in memory
+
+    var toolWidth = 15;
+    var pos = 0;
+
+
+    for (var i in globals.sheet.tiles){
+        toolboxPos.push([
+                           (i % toolWidth  )*(globals.tileWidth+4), 
+                           (globals.tileWidth)*(globals.tilesWide  ) + (Math.floor(i/toolWidth)) * 20, 
+                       ]);
+    }
+
+
+
 }
 
 $(function(){ 

@@ -36,16 +36,22 @@ function decorate(objToDecorate, decorator, initargs){
  * "Static" part of Trackable. Organizes all existing game objects.
  */
 var Objects = {
+    arrays: {},
+
     all:
     function(type){
         return Objects.arrays[type];
     },
 
-    arrays: {},
-
     removeAll: 
     function(){
         this.arrays = {}; //Am I cheating or something? This is too easy...
+    },
+    remove: 
+    function(o){
+        for (var dec in o.decorators){
+            utils.removeObj(this.arrays[o.decorators[dec]], o);
+        }
     },
 
 };
@@ -54,6 +60,7 @@ var Objects = {
  * Trackable decorator.
  *
  * YES. They need to be separate. This took me ages to figure out. 
+ *
  */
 function Trackable(){
     this.init = function(){
@@ -72,9 +79,6 @@ function Trackable(){
         }
     };
 
-    this.remove = function(f){
-
-    };
 }
 Trackable.arrays = {};
 

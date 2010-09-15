@@ -44,7 +44,7 @@
 
 
 #inventory {
-    display: hide;
+    display: block;
     left: 10px;
     top: 40px;
     /*height: 150px;*/ 
@@ -54,3 +54,5 @@
     padding-left: 10px;
     padding-right: 10px;
 }
+
+
