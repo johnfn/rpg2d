@@ -1,3 +1,11 @@
+var spriteFiles = {
+    "outside_normal" : "GR",
+    "dungeon"        : "DN",
+
+    //...
+};
+
+
 var globals = {
     context     : undefined,
     sheet       : undefined,
@@ -32,11 +40,9 @@ globals.mapWidth = (globals.tilesWide - 1) * globals.tileWidth;
 for (var i=0;i<255;i++) globals.keys[i]=false;
 
 globals.colors = {
-    "0" : "CCCCCC",
-    "1" : "222222",
-    "p" : "5555ff",
     "H" : "000000", //Highlighted square; map editor only. At least probably.
 };
+
 
 var Modes = {
     NORMAL : 0,

@@ -112,5 +112,15 @@ function initialize(){
 }
 
 $(function(){ 
-    globals.sheet = new SpriteSheet("../graphics/spritesheet.png", 16, initialize)
+
+    function loadRecursive(num){
+
+
+    }
+
+/*var spriteFiles = {
+    "outside_normal" : "GR",
+    "dungeon"        : "DN",*/
+
+    globals.sheet = new SpriteSheet(globals.spriteFiles, 16, initialize)
 });

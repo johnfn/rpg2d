@@ -1,9 +1,19 @@
-function SpriteSheet(sheet, size, callback){
+
+
+// Takes as arguments: Dict of files to use as spritesheets mapped to their shortcut,
+// size of individual sprite, callback fn
+
+
+
+//ex sheets var:
+//
+//
+function SpriteSheet(sheets, size, callback){
     this.img = new Image();
     this.img.src = sheet;
     this.cache = [];
     this.tiles = [];
-    this.spriteW = 8;
+    this.spriteW = 20;
 
     //CLOSING TIME
     var cache = this.cache;
@@ -11,7 +21,7 @@ function SpriteSheet(sheet, size, callback){
 
     this.imgLoad = 
         function(){
-            //cache some tiles
+            //cache some tiles (this code makes sure not to load the same tile twice)
             //
 
             var seenBefore = {};
@@ -53,3 +63,10 @@ function SpriteSheet(sheet, size, callback){
 
     }
 }
+
+function loadFilesToSheet(files, sheet){
+
+
+
+
+} 
