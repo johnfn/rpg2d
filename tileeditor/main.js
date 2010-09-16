@@ -1,7 +1,10 @@
 var selTile = "1";
+var dragging = false;
 
 var toolboxPos = [];
 var map = [];
+var startdrag  = {x:0, y:0};
+var enddrag    = {x:0, y:0};
 for (var i=0;i<globals.tilesWide;i++){
     map.push([]);
     for (var j=0;j<globals.tilesWide;j++){
@@ -9,13 +12,28 @@ for (var i=0;i<globals.tilesWide;i++){
     }
 }
 
+function drag(){
+    if (!dragging){
+        //just started dragging
 
+        console.log("Yay");
+        startdrag  = {x:globals.mouseX, y:globals.mouseY};
+    }
+
+    enddrag = {x:globals.mouseX, y:globals.mouseY};
+
+    globals.context.strokeRect(Math.min(startdrag.x, enddrag.x), Math.min(startdrag.y, enddrag.y), Math.abs(startdrag.x-enddrag.x), Math.abs(startdrag.y - enddrag.y)); 
+}
 
 function click(){
-    if (globals.mouseX < globals.tileWidth * globals.tilesWide &&
-        globals.mouseY < globals.tileWidth * globals.tilesWide ){
-        
-        map[Math.floor(globals.mouseX / globals.tileWidth)][Math.floor(globals.mouseY / globals.tileWidth)] = selTile;
+    for (var x = Math.min(enddrag.x, startdrag.x); x <= Math.max(enddrag.x, startdrag.x); x += 16){
+        for (var y = Math.min(enddrag.y, startdrag.y); y <= Math.max(enddrag.y, startdrag.y); y += 16){
+            if (x < globals.tileWidth * globals.tilesWide &&
+                y < globals.tileWidth * globals.tilesWide ){
+                
+                map[Math.floor(x / globals.tileWidth)][Math.floor(y / globals.tileWidth)] = selTile;
+            }
+        }
     }
     var pos = 0;
     for (var i in Sprites.getOrderedList()){
@@ -31,7 +49,12 @@ function gameLoop(){
         drawScreen();
     }
     if (globals.mousedown) { 
+        drag();
+        dragging = true;
+    } 
+    if (!globals.mousedown && dragging) {
         click();
+        dragging = false;
     }
 }
 
