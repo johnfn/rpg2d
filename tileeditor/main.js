@@ -27,7 +27,7 @@ function drag(){
 
 function click(){
     for (var x = Math.min(enddrag.x, startdrag.x); x <= Math.max(enddrag.x, startdrag.x); x += 16){
-        for (var y = Math.min(enddrag.y, startdrag.y); y <= Math.max(enddrag.y, startdrag.y); y += 16){
+        for (var y = Math.min(enddrag.y, startdrag.y); y <= Math.ceil(Math.max(enddrag.y, startdrag.y)/16) * 16; y += 16){
             if (x < globals.tileWidth * globals.tilesWide &&
                 y < globals.tileWidth * globals.tilesWide ){
                 
