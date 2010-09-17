@@ -66,8 +66,8 @@ function SpriteSheet(sheet, size, callback){
             //cache some tiles (this code makes sure not to load the same tile twice)
             //
 
-            for (var i=0;i<this.spriteW;i++){
-                for (var j=0;j<this.spriteW;j++){
+            for (var i=0;i<this.img.width/globals.tileWidth;i++){
+                for (var j=0;j<this.img.height/globals.tileWidth;j++){
                     var buff = document.createElement('canvas');
                     buff.width = globals.tileWidth;
                     buff.height = globals.tileWidth;

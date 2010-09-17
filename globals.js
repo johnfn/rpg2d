@@ -1,4 +1,5 @@
 var spriteAbbr = {
+    "editor"         : "ED",
     "outside_normal" : "GR",
     "dungeon"        : "DN",
 

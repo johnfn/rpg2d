@@ -1,0 +1,25 @@
+<div id= "mydiv" style="font-family: monospace"> test </div> 
+
+<script type="text/javascript"> 
+    var x = 5;
+    var y = 5;
+    var rad = 4;
+    var width = 10;
+    var height = 10;
+
+    var dotArray = "";
+
+    for (var i=0;i<width;i++){
+        for (var j=0;j<height;j++){
+            if (Math.sqrt( Math.pow(i-y, 2) + Math.pow(j-x, 2)) <= rad){
+                dotArray += (".");
+            } else {
+                dotArray += ("&nbsp;");
+            }
+        }
+        dotArray += "<br \>";
+    }
+
+document.getElementById('mydiv').innerHTML = dotArray;
+</script> 
+
