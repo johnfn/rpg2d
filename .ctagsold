@@ -1,0 +1,5 @@
+--regex-JavaScript=/^var[ \t]+([a-zA-Z0-9._$]+) = \[/\1/a,array/
+--regex-JavaScript=/^var[ \t]+([a-zA-Z0-9._$]+) = \{/\1/o,object/
+--regex-JavaScript=/^var[ \t]+([a-zA-Z0-9._$]+) = (^{^[)+/\1/v,var/
+--regex-JavaScript=/(this\.)?([A-Za-z0-9._$()]+)[ \t]*[:=][ \t]*function[ \t]*\(\)/\2/f,function/
+--regex-JavaScript=/^[ \t]*function ([A-Za-z0-9]*)/\1/f,function/

@@ -40,7 +40,7 @@ var Sprites = {
     getOrderedList : function(){
         return this.ordered;
     },
-    loadSpriteFile : function(f, cb){
+    loadSpriteFile : function(f, cb) {
         new SpriteSheet(f, 16, cb); 
     },
 
@@ -66,8 +66,8 @@ function SpriteSheet(sheet, size, callback){
             //cache some tiles (this code makes sure not to load the same tile twice)
             //
 
-            for (var i=0;i<this.img.width/globals.tileWidth;i++){
-                for (var j=0;j<this.img.height/globals.tileWidth;j++){
+            for (var i=0;i<this.img.naturalWidth/globals.tileWidth;i++){
+                for (var j=0;j<this.img.naturalHeight/globals.tileWidth;j++){
                     var buff = document.createElement('canvas');
                     buff.width = globals.tileWidth;
                     buff.height = globals.tileWidth;

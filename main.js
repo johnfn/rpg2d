@@ -1,3 +1,5 @@
+var map;
+
 var Player = {
     speed : 4,
     mapX  : 1,
@@ -8,7 +10,7 @@ var Player = {
 };
 
 function gameLoop(){
-    cmap = maps[Player.mapX][Player.mapY].data;
+    cmap = maps[Player.mapX][Player.mapY];
 
     if (Game.mode == Modes.NORMAL){
         movePlayer();
@@ -68,7 +70,7 @@ function canMoveHere(x, y, w){
     var points = utils.getRectPoints(x, y, w);
 
     for (var p in points){
-        if (cmap[Math.floor(points[p].x/globals.tileWidth)][Math.floor(points[p].y/globals.tileWidth)] == "1"){
+        if (!map.safeTile(Math.floor(points[p].x/globals.tileWidth), Math.floor(points[p].y/globals.tileWidth))){
             return canMoveHere.IMPOS;
         }
     }
@@ -138,7 +140,7 @@ function drawScreen(){
 }
 
 function initialize(){
-    var map = new Map();
+    map = new Map();
     map.load(1,1);
 
 
@@ -156,10 +158,16 @@ $(function(){
     //These should be chained for maximum nonbuggness.
 
 
-    Sprites.loadSpriteFile("dungeon", function(){
-        Sprites.loadSpriteFile("outside_normal", initialize);    
-        
+
+    debugger;
+
+    Sprites.loadSpriteFile("editor", function(){
+        Sprites.loadSpriteFile("dungeon", function(){
+            Sprites.loadSpriteFile("outside_normal", initialize);    
+            
+        });
     });
+
 
     /*globals.itemsheet = new SpriteSheet("graphics/itemsheet.png", 16, function(){ 
 

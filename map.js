@@ -1,8 +1,10 @@
-function Map(){
+function Map() {
     this.mapX = -1;
     this.mapY = -1;
 
     this.tiles = [];
+    this.special = [];
+    this.cmap = undefined;
 
     this.load = function(mapX, mapY) { 
         console.log("loading");
@@ -12,7 +14,8 @@ function Map(){
 
         this.mapX = mapX;
         this.mapY = mapY;
-        var data = maps[Player.mapX][Player.mapY].data;
+        this.cmap = maps[Player.mapX][Player.mapY];
+        var data = this.cmap.data;
 
         if (this.tiles.length != 0){
             console.log("removing");
@@ -28,7 +31,6 @@ function Map(){
                 tiles.push(new Tile(i * globals.tileWidth, j * globals.tileWidth, data[i][j][0], data[i][j][1], data[i][j][2]));
             }
         }
-
 
         //Time to do some dynamic loading of characters items etc.
         //exits: {},
@@ -54,6 +56,11 @@ function Map(){
         }
         //var i = new Item(50, 50, 0);
 
+    }
+
+    this.safeTile = function(x, y){
+       if (this.cmap.special[x][y].length == 1) return true;
+       return false;
     }
 }
 

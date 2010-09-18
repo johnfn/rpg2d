@@ -152,12 +152,12 @@ function initialize(){
 
                 if (specialmap[i][j][0] == 1 && specialmap[i][j][1] == 0) {
 
-                    out += "[0], " ; //Not IE compliant, but screw IE
+                    out += "[0], " ; 
                     continue;
                 }
-                out += "["+  specialmap[i][j][0] + "," + specialmap[i][j][1] + ",'" + specialmap[i][j][2] + "'], " ; //Not IE compliant, but screw IE
+                out += "["+  specialmap[i][j][0] + "," + specialmap[i][j][1] + ",'" + specialmap[i][j][2] + "'], " ; 
             }
-            out += "], \n"; //Still not IE compliant
+            out += "], \n";
         }
         out += "]\n";
 

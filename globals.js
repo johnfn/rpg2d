@@ -6,7 +6,6 @@ var spriteAbbr = {
     //...
 };
 
-
 var globals = {
     context     : undefined,
     sheet       : undefined,
