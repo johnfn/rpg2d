@@ -74,9 +74,14 @@ function click(){
 
     if (enddrag.x - startdrag.x == 0 && enddrag.y - startdrag.y == 0){
         //Special case: travelling to other map when you click on it
-        if (selTile[2] == "ED" && selTile[0] == 2 && selTile[1] == 0){
-            if (selTile[3] == editedmap[Math.floor(x / globals.tileWidth)][Math.floor(y / globals.tileWidth)][3]){
-                console.log("travelling nao");
+        var cpos = editedmap[Math.floor(enddrag.x / globals.tileWidth)]
+        if (cpos) { 
+            cpos = cpos[Math.floor(enddrag.y / globals.tileWidth)];
+            if (cpos && cpos[3]) { 
+                if (selTile[2] == "ED" && selTile[0] == 3 && selTile[1] == 0){ 
+                    switchToMap(cpos[3]-0);
+                    return;
+                }
             }
         }
     }
