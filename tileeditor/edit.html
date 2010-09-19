@@ -2,16 +2,31 @@
 <html>
     <head>
         <title> hi </title>
+        <style type="text/css">
+            select { 
+                position: absolute;
+                top: 20px;
+                left: 650px;
+            }
+        </style>
+
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"> </script>
         <script type="text/javascript" src="../globals.js"> </script>
         <script type="text/javascript" src="../spritesheet.js"> </script>
-        <script type="text/javascript" src="main.js"> </script>
+        <script type="text/javascript" src="editor.js"> </script>
     </head>
 
     <body>
         <canvas id="main" width=600 height=600> </canvas>
+
+        <select id = "maplist" multiple="multiple">
+
+        </select>
+
+        <input type="button" value="new room" id="newroom"/>
         <input type="button" value="output" id="btn"/>
         <input type="button" value="load" id="lbtn"/>
         <textarea rows="5" cols="35" id="txt"></textarea>
+
     </body>
 </html>
