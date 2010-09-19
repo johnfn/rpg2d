@@ -2,15 +2,14 @@ var map;
 
 var Player = {
     speed : 4,
-    mapX  : 1,
-    mapY  : 1,
+    curMap : "0",
     x     : 5,
     y     : 5,
     width : 12,
 };
 
 function gameLoop(){
-    cmap = maps[Player.mapX][Player.mapY];
+    cmap = maps[Player.curMap];
 
     if (Game.mode == Modes.NORMAL){
         movePlayer();
@@ -70,7 +69,7 @@ function canMoveHere(x, y, w){
     var points = utils.getRectPoints(x, y, w);
 
     for (var p in points){
-        if (!map.safeTile(Math.floor(points[p].x/globals.tileWidth), Math.floor(points[p].y/globals.tileWidth))){
+        if (map.safeTile(Math.floor(points[p].x/globals.tileWidth), Math.floor(points[p].y/globals.tileWidth))){
             return canMoveHere.IMPOS;
         }
     }
@@ -141,7 +140,7 @@ function drawScreen(){
 
 function initialize(){
     map = new Map();
-    map.load(1,1);
+    map.load(0);
 
 
     globals.context = document.getElementById('main').getContext('2d');
@@ -158,8 +157,6 @@ $(function(){
     //These should be chained for maximum nonbuggness.
 
 
-
-    debugger;
 
     Sprites.loadSpriteFile("editor", function(){
         Sprites.loadSpriteFile("dungeon", function(){

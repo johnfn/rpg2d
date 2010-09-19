@@ -1,21 +1,17 @@
 function Map() {
-    this.mapX = -1;
-    this.mapY = -1;
+    this.mapID = -1;
 
     this.tiles = [];
     this.special = [];
     this.cmap = undefined;
 
-    this.load = function(mapX, mapY) { 
-        console.log("loading");
-        if (mapX == this.mapX && 
-            mapY == this.mapY )
+    this.load = function(mapID) { 
+        if (mapID == this.mapID)
             return;
 
-        this.mapX = mapX;
-        this.mapY = mapY;
-        this.cmap = maps[Player.mapX][Player.mapY];
-        var data = this.cmap.data;
+        this.mapID = mapID;
+        this.cmap = maps[mapID];
+        var data = this.cmap.map;
 
         if (this.tiles.length != 0){
             console.log("removing");
@@ -44,12 +40,12 @@ function Map() {
 
         for (objStr in objMap) { 
 
-            for (var pos in maps[Player.mapX][Player.mapY][objStr]){
+            for (var pos in maps[mapID][objStr]){
                 var cpos = pos.split(",");
 
                 var c = new objMap[objStr]((cpos[0]-0) * globals.tileWidth, 
                                            (cpos[1]-0) * globals.tileWidth, 
-                                            maps[Player.mapX][Player.mapY][objStr][pos]);
+                                            maps[mapID][objStr][pos]);
 
             }
 
@@ -59,8 +55,10 @@ function Map() {
     }
 
     this.safeTile = function(x, y){
-       if (this.cmap.special[x][y].length == 1) return true;
-       return false;
+       var obj = this.cmap.special[x][y];
+
+       if (obj[0] == 1 && obj[1] == 0 && obj[2] == "ED") return false;
+       return true;
     }
 }
 
